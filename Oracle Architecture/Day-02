@@ -1,0 +1,31 @@
+----Oracle database Architec---
+The separation between the Oracle Database (the physical files on the disk) and the Oracle Instance (the memory structures and background processes running on the server).
+
+\*\*\*\* The Oracle Instance (Memory and Processes): When you "start up" an Oracle database, you are actually starting an Oracle Instance. The instance is temporary; it only exists in the server's RAM and CPU while the database is running. It consists of two main memory structures and a set of background processes.
+
+Memory Structures:
+
+      System Global Area (SGA): This is a shared memory region allocated when the instance starts. It contains data and control information shared by all database users. Key components include:
+
+            1. Database Buffer Cache: Holds copies of data blocks read from the physical data files. When a user modifies data, it is changed here first (becoming a "dirty block") before being written to disk. This drastically improves performance.
+
+            2. Redo Log Buffer: A circular buffer that records all changes made to the database. These entries are crucial for database recovery in case of a crash.
+
+            3. Shared Pool: Caches recently executed SQL statements and data dictionary information so the database doesn't have to parse and compile the same queries repeatedly.
+
+            4. Large Pool & Java Pool: Optional memory areas used for large operations (like backups) and running Java code within the database.
+
+
+      Program Global Area (PGA): Unlike the SGA, the PGA is a private memory region. Every time a user connects to the database, a server process is created, and a PGA is allocated for that specific process. It holds session-specific data, such as sort areas (for ORDER BY or GROUP BY clauses) and cursor information.
+
+Background Processes : Background processes are the engine of the Oracle Instance. They handle routine maintenance, write memory to disk, and ensure data integrity.
+
+      1. DBWn (Database Writer): Writes modified ("dirty") data blocks from the Database Buffer Cache (SGA) to the physical Data Files on disk.
+
+      2. LGWR (Log Writer): Writes redo log entries from the Redo Log Buffer to the physical Redo Log Files on disk. This is a critical process that ensures no committed transactions are lost.
+
+      3. SMON (System Monitor): Performs crash recovery when the instance is started following a failure. It also cleans up unused temporary segments.
+
+      4. PMON (Process Monitor): Cleans up after failed user processes. If a user's session drops unexpectedly, PMON releases the database locks and frees the PGA memory that session was using.
+
+      5. CKPT (Checkpoint): Updates the control files and data file headers to record the latest point in time where all modified data in memory was successfully written to disk.
