@@ -1,5 +1,6 @@
-----Oracle database Architec---
-The separation between the Oracle Database (the physical files on the disk) and the Oracle Instance (the memory structures and background processes running on the server).
+-------:::::Oracle database Architec::::-------
+
+      The separation between the Oracle Database (the physical files on the disk) and the Oracle Instance (the memory structures and background processes running on the server).
 
 \*\*\*\* The Oracle Instance (Memory and Processes): When you "start up" an Oracle database, you are actually starting an Oracle Instance. The instance is temporary; it only exists in the server's RAM and CPU while the database is running. It consists of two main memory structures and a set of background processes.
 
@@ -29,3 +30,5 @@ Background Processes : Background processes are the engine of the Oracle Instanc
       4. PMON (Process Monitor): Cleans up after failed user processes. If a user's session drops unexpectedly, PMON releases the database locks and frees the PGA memory that session was using.
 
       5. CKPT (Checkpoint): Updates the control files and data file headers to record the latest point in time where all modified data in memory was successfully written to disk.
+
+**\*\***
