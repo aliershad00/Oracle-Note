@@ -1,0 +1,25 @@
+-------:::::All of background Processes::::-----------
+
+**\*** The Oracle Database (Physical Structure):
+The "Database" refers to the actual files stored on the server's hard drives. These files persist even when the server is powered off.
+
+      1. Data Files: The physical files that store all the actual data (tables, indexes, sequences).
+
+      2. Control Files: Small but critical files that contain metadata about the database itself. They track the database name, the locations of all data and redo log files, and the current state of the database (checkpoints). If control files are lost, the database cannot open.
+
+      3. Online Redo Log Files: Files that record a history of all changes made to the database. If the server crashes before the Database Writer (DBWn) can write dirty blocks to the Data Files, the Instance uses the Redo Log Files to recreate those changes upon restart.
+
+      4. Parameter File (SPFILE/PFILE): Defines how the instance should be configured upon startup (e.g., how much RAM to allocate to the SGA).
+
+      5. Password File: Allows administrators to connect to and manage the database remotely before the database is fully opened.
+
+**\*** Logical Storage Architecture :
+Oracle uses logical structures to manage how physical space in the Data Files is used. This abstracts the physical hardware away from the database developers.
+
+      1. Tablespace: The highest logical storage tier. A database is divided into multiple tablespaces (e.g., SYSTEM, USERS, TEMP). One tablespace is made up of one or more physical Data Files.
+
+      2. Segment: An object that consumes storage within a tablespace, such as a Table or an Index.
+
+      3. Extent: A segment is made up of multiple extents. An extent is a contiguous allocation of database blocks. When a table grows and needs more space, Oracle allocates a new extent to it.
+
+      4. Data Block: The smallest unit of storage in Oracle (typically 8KB). A block corresponds to a specific number of bytes of physical disk space.
